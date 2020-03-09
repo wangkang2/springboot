@@ -1,0 +1,53 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /springboot
+student:
+  name: wangkang
+  age: 18
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8&serverTimezone=GMT%2B8&useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&autoReconnectForPools=true&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count==countSql
+  page-size-zero: true
+  #mybatis打印sql日志
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+wechat:
+  appID: wxe900623e08c260fa
+  appsecret: 7d115647131f0714764649f3b92e6930
+  tokenUrl: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential
+http-pool:
+  maxTotal: 100
+  defaultMaxPerRoute: 20 #并发数
+  connectTimeout: 1000 #连接超时时间
+  connectionRequestTimeout: 500 #从连接池中获取到连接的最长时间
+  socketTimeout: 10000 #数据传输的最长时间
+  staleConnectionCheckEnabled: true #提交请求前测试连接是否可用
+config:
+  jwt:
+    secret: wangkang #加密密钥
+    expire: 3600 #token有效时间
+    header: token #header名称
+jpush:
+  appKey: d74262befa9ee1742820ed87
+  masterSecret: 124cd0d7f458ed1729d31d18
+  liveTime: 300000
+
