@@ -109,9 +109,17 @@
             <artifactId>rocketmq-client</artifactId>
             <version>4.5.2</version>
         </dependency>
+
+        <!-- 单元测试 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <!-- solr -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-solr</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,26 +1,42 @@
 package com.wk.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.wk.entity.User;
 import com.wk.service.UserService;
+import com.wk.test.solrTest.Book;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.CloudSolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Api("用户管理")
 @RestController
+@SuppressWarnings("all")
+@Scope("prototype")
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userServiceImpl;
+    @Autowired
+    private CloudSolrClient cloudSolrClient;
 
     @ApiOperation(value = "获取用户详细信息",notes = "根据url的id来获取用户的详细信息")
     @ApiImplicitParam(name = "id",value = "用户ID",required = true,dataType ="Long",paramType = "path")
@@ -69,5 +85,42 @@ public class UserController {
         PageHelper.startPage(currIndex,pageSize);
         List<User> users =  userServiceImpl.findUsers(map);
         return users;
+    }
+
+    @PostMapping("findSolr")
+    public List<Book> findSolr(@RequestBody Map map) throws IOException, SolrServerException {
+        String bookDescroption = (String) map.get("bookDescroption");
+        SolrQuery solrQuery = new SolrQuery();
+        solrQuery.setQuery("bookDescroption:"+bookDescroption);
+        //高亮显示
+        solrQuery.setHighlight(true);
+        //设置高亮显示的域
+        solrQuery.addHighlightField("bookDescroption");
+        //高亮显示的前缀
+        solrQuery.setHighlightSimplePre("<font color='red'>");
+        //高亮显示的后缀
+        solrQuery.setHighlightSimplePost("</font>");
+        solrQuery.setFilterQueries("bookPrice:[10 TO 15]");
+        solrQuery.setStart(0);
+        solrQuery.setRows(20);
+        solrQuery.addSort("id", SolrQuery.ORDER.asc);
+        cloudSolrClient.setDefaultCollection("c2");
+        QueryResponse queryResponse = cloudSolrClient.query(solrQuery);
+        if(queryResponse!=null){
+            List<Book> books = new ArrayList<>();
+            SolrDocumentList solrDocuments = queryResponse.getResults();
+            Map<String, Map<String, List<String>>> highLightMap = queryResponse.getHighlighting();
+            for (SolrDocument solrDocument:solrDocuments){
+                List<String> highLights = highLightMap.get(solrDocument.get("id")).get("bookDescroption");
+                if(!CollectionUtils.isEmpty(highLights)){
+                    solrDocument.setField("bookDescroption",highLights.get(0));
+                    Book book = JSONObject.parseObject(JSONObject.toJSONString(solrDocument),Book.class);
+                    books.add(book);
+                }
+            }
+            //List<Book> books = queryResponse.getBeans(Book.class);
+            return books;
+        }
+        return null;
     }
 }

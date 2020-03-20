@@ -20,6 +20,13 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+  data:
+    solr:
+#      host: http://127.0.0.1:8983/solr/myCore
+      zk-host: 10.32.16.179:9983
+      repositories:
+        enabled: true
+
 pagehelper:
   helper-dialect: mysql
   reasonable: true
