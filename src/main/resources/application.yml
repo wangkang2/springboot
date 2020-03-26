@@ -57,4 +57,9 @@ jpush:
   appKey: d74262befa9ee1742820ed87
   masterSecret: 124cd0d7f458ed1729d31d18
   liveTime: 300000
+es:
+  host: 10.32.16.179
+  port: 9200
+  schema: http
+
 
