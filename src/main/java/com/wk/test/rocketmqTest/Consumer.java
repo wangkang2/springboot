@@ -11,15 +11,15 @@ import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 public class Consumer {
     public static void main(String[] args) throws MQClientException {
         //定义消费者名称，MQ往消费者推送
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("quickstart_consumer");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("quickstart_consumer_1");
         //连接rocketMQ的namesrv地址（此次为集群）
-        consumer.setNamesrvAddr("10.32.16.179:9876");
+        consumer.setNamesrvAddr("10.32.16.195:9876");
         //新订阅组第一次启动，从头消费到尾，后续从上次的消费进度继续消费
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         //广播模式
         //consumer.setMessageModel(MessageModel.BROADCASTING);
         //订阅的主题和标签（*代表所有标签）
-        consumer.subscribe("TopicQuickStart", "Tag1 || Tag2");
+        consumer.subscribe("DataTransfer", "Tag1 || Tag2");
         //消费者监听
         consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
             MessageExt msg = msgs.get(0);

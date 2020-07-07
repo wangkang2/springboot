@@ -1,5 +1,7 @@
 package com.wk.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.wk.entity.HttpResult;
 import com.wk.service.HttpClientService;
 import org.apache.http.NameValuePair;
@@ -9,6 +11,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -58,15 +61,68 @@ public class HttpClientServiceImpl implements HttpClientService {
     @Override
     public HttpResult doPost(String url, Map<String, Object> map) throws Exception {
         HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("Content-type", "application/json");
         httpPost.setConfig(config);
         if(map!=null){
-            List<NameValuePair> list = new ArrayList<>();
-            for(Map.Entry<String,Object> entry:map.entrySet()){
-                list.add(new BasicNameValuePair(entry.getKey(),entry.getValue().toString()));
-            }
-            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(list, "UTF-8");
-            // 把表单放到post里
-            httpPost.setEntity(urlEncodedFormEntity);
+            System.out.println(JSONArray.toJSONString(map));
+            StringEntity requestEntity = new StringEntity(JSONArray.toJSONString(map),"utf-8");
+            requestEntity.setContentEncoding("UTF-8");
+            httpPost.setEntity(requestEntity);
+        }
+        CloseableHttpResponse response = this.httpClient.execute(httpPost);
+        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
+                response.getEntity(), "UTF-8"));
+    }
+
+    @Override
+    public HttpResult doPostHead(String url, List<Map<String, Object>> list, String service, String method) throws Exception {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("X-Access-Token","11d852e3-306c-4c1a-95da-c25377b26972");
+        httpPost.setHeader("X-Service-Id",service);
+        httpPost.setHeader("X-Service-Method",method);
+        httpPost.setHeader("Content-type", "application/json");
+        httpPost.setConfig(config);
+        if(list!=null){
+            System.out.println(JSONArray.toJSONString(list));
+            StringEntity requestEntity = new StringEntity(JSONArray.toJSONString(list),"utf-8");
+            requestEntity.setContentEncoding("UTF-8");
+            httpPost.setEntity(requestEntity);
+        }
+        CloseableHttpResponse response = this.httpClient.execute(httpPost);
+        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
+                response.getEntity(), "UTF-8"));
+    }
+
+    @Override
+    public HttpResult doPostHead2(String url, List<String> list, String service, String method) throws Exception {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("X-Access-Token","11d852e3-306c-4c1a-95da-c25377b26972");
+        httpPost.setHeader("X-Service-Id",service);
+        httpPost.setHeader("X-Service-Method",method);
+        httpPost.setHeader("Content-type", "application/json");
+        httpPost.setConfig(config);
+        if(list!=null){
+            StringEntity requestEntity = new StringEntity(JSONArray.toJSONString(list),"utf-8");
+            requestEntity.setContentEncoding("UTF-8");
+            httpPost.setEntity(requestEntity);
+        }
+        CloseableHttpResponse response = this.httpClient.execute(httpPost);
+        return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(
+                response.getEntity(), "UTF-8"));
+    }
+
+    @Override
+    public HttpResult doPostHead3(String url, List<Integer> list, String service, String method) throws Exception {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("X-Access-Token","11d852e3-306c-4c1a-95da-c25377b26972");
+        httpPost.setHeader("X-Service-Id",service);
+        httpPost.setHeader("X-Service-Method",method);
+        httpPost.setHeader("Content-type", "application/json");
+        httpPost.setConfig(config);
+        if(list!=null){
+            StringEntity requestEntity = new StringEntity(JSONArray.toJSONString(list),"utf-8");
+            requestEntity.setContentEncoding("UTF-8");
+            httpPost.setEntity(requestEntity);
         }
         CloseableHttpResponse response = this.httpClient.execute(httpPost);
         return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(

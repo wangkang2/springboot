@@ -1,5 +1,5 @@
 server:
-  port: 8089
+  port: 9999
   servlet:
     context-path: /springboot
 student:
@@ -44,9 +44,9 @@ wechat:
 http-pool:
   maxTotal: 100
   defaultMaxPerRoute: 20 #并发数
-  connectTimeout: 1000 #连接超时时间
-  connectionRequestTimeout: 500 #从连接池中获取到连接的最长时间
-  socketTimeout: 10000 #数据传输的最长时间
+  connectTimeout: 100000 #连接超时时间
+  connectionRequestTimeout: 500000 #从连接池中获取到连接的最长时间
+  socketTimeout: 100000 #数据传输的最长时间
   staleConnectionCheckEnabled: true #提交请求前测试连接是否可用
 config:
   jwt:

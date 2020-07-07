@@ -12,7 +12,39 @@ public class FeeController {
     @PostMapping("/listOutpatientExpenses")
     public String listOutpatientExpenses(@RequestBody Map map){
         System.out.println(map);
-        return "{\"code\":\"1\",\"message\":\"成功\",\"data\":{\"costAmount\":\"300.00\",\"selfPayAmount\":\"200.00\",\"reimburseAmount\":\"100.00\",\"costList\":[{\"hospitalCode\":\"620602001\",\"hospitalName\":\"凉州医院中心卫生院\",\"amount\":\"80.00\",\"vdType\":\"门诊\",\"costDate\":\"2019-08-23\",\"invoiceNumber\":\"111\",\"invoiceStatus\":\"已打印\",\"patientCode\":\"111\",\"remark\":\"\"}]}}";
+        return "{\n" +
+                "\t\"package\": {\n" +
+                "\t\t\"head\": {\n" +
+                "\t\t\t\"busseID\": \"1800\",\n" +
+                "\t\t\t\"sendTradeNum\": \"20150701083030-10011001-0001\",\n" +
+                "\t\t\t\"senderCode\": \"001\",\n" +
+                "\t\t\t\"senderName\": \"消息发送者名称\",\n" +
+                "\t\t\t\"receiverCode\": \"002\",\n" +
+                "\t\t\t\"receiverName\": \"消息接受者的名称\",\n" +
+                "\t\t\t\"intermediaryCode\": \"003\",\n" +
+                "\t\t\t\"intermediaryName\": \"第三方的名称\",\n" +
+                "\t\t\t\"hosorgNum\": \"001\",\n" +
+                "\t\t\t\"hosorgName\": \"操作员姓名\",\n" +
+                "\t\t\t\"systemType\": \"1\",\n" +
+                "\t\t\t\"busenissType\": \"8\",\n" +
+                "\t\t\t\"standardVersionCode\": \"version:1.0.0\",\n" +
+                "\t\t\t\"clientmacAddress \": \"30BB7E0A5E2D \",\n" +
+                "\t\t\t\" recordCount \": \"1\"\n" +
+                "\t\t},\n" +
+                "\t\t\"body\": [\n" +
+                "\t\t\t{}\n" +
+                "\t\t],\n" +
+                "\t\t\"additionInfo\": {\n" +
+                "\t\t\t\"errorCode\": \"0\",\n" +
+                "\t\t\t\"errorMsg\": \"\",\n" +
+                "\t\t\t\"receiverTradeNum\": \"20150701083030-10012231-0001\",\n" +
+                "\t\t\t\"correlationId\": \"\",\n" +
+                "\t\t\t\"asyncAsk\": \"0\",\n" +
+                "\t\t\t\"callback\": \"\",\n" +
+                "\t\t\t\"curDllAddr\": \"\"\n" +
+                "\t\t}\n" +
+                "\t}\n" +
+                "}";
     }
 
     @PostMapping("/outpatientExpensesDetail")

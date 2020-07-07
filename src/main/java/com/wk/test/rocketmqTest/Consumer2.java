@@ -10,7 +10,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 public class Consumer2 {
     public static void main(String[] args) throws MQClientException {
         //定义消费者名称，MQ往消费者推送
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("quickstart_consumer");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("quickstart_consumer_2");
         //连接rocketMQ的namesrv地址（此次为集群）
         consumer.setNamesrvAddr("10.32.16.179:9876");
         //新订阅组第一次启动，从头消费到尾，后续从上次的消费进度继续消费
