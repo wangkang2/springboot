@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.wk</groupId>
     <artifactId>springboot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>springboot</name>
     <description>Demo project for Spring Boot</description>
 
@@ -181,6 +181,22 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/**</include>
+                </includes>             <!-- 开启过滤，用指定的参数替换directory下的文件中的参数 -->
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>
