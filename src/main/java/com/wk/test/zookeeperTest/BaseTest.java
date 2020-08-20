@@ -3,6 +3,8 @@ package com.wk.test.zookeeperTest;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
@@ -23,6 +25,11 @@ public class BaseTest {
                     if(Event.EventType.None == event.getType()){
                         connectedSemaphore.countDown();
                         System.out.println("zk 已经建立连接");
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

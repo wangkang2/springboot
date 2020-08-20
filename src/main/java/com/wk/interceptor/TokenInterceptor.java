@@ -19,16 +19,17 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws SignatureException {
 
-//        String token = request.getHeader(jwtConfig.getHeader());
-//
-//        if(StringUtils.isEmpty(token)){
-//            throw new SignatureException("token为空");
-//        }
-//
-//        if(jwtConfig.isTokenExpired(token)){
-//            throw new SignatureException("token失效");
-//        }
+        String token = request.getHeader(jwtConfig.getHeader());
+
+        if(StringUtils.isEmpty(token)){
+            throw new SignatureException("token为空");
+        }
+
+        if(jwtConfig.isTokenExpired(token)){
+            throw new SignatureException("token失效");
+        }
         return true;
 
     }
+
 }

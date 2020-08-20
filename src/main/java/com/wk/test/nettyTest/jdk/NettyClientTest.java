@@ -52,7 +52,7 @@ public class NettyClientTest {
 
     public void connect() {
         try {
-            this.cf = b.connect("127.0.0.1", 8090).sync();
+            this.cf = b.connect("10.32.16.179", 11111).sync();
             System.out.println("远程服务器已经连接, 可以进行数据交换..");
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,25 +79,25 @@ public class NettyClientTest {
         request.setId("1");
         request.setName("上杉绘梨衣");
         request.setInfo("04.24，和Sakura去东京天空树，世界上最暖和的地方在天空树的顶上。");
-        future.channel().writeAndFlush(request).sync();
+        future.channel().writeAndFlush("request").sync();
 
-        Request request2 = new Request();
-        request2.setId("2");
-        request2.setName("上杉绘梨衣");
-        request2.setInfo("04.26，和Sakura去明治神宫，有人在那里举办婚礼。");
-        future.channel().writeAndFlush(request2);
-
-        Request request3 = new Request();
-        request3.setId("3");
-        request3.setName("上杉绘梨衣");
-        request3.setInfo("04.25，和Sakura去迪士尼，鬼屋很可怕，但是有Sakura在，所以不可怕。");
-        future.channel().writeAndFlush(request3);
-
-        Request request4 = new Request();
-        request4.setId("4");
-        request4.setName("上杉绘梨衣");
-        request4.setInfo("Sakura最好了。");
-        future.channel().writeAndFlush(request4);
+//        Request request2 = new Request();
+//        request2.setId("2");
+//        request2.setName("上杉绘梨衣");
+//        request2.setInfo("04.26，和Sakura去明治神宫，有人在那里举办婚礼。");
+//        future.channel().writeAndFlush(request2);
+//
+//        Request request3 = new Request();
+//        request3.setId("3");
+//        request3.setName("上杉绘梨衣");
+//        request3.setInfo("04.25，和Sakura去迪士尼，鬼屋很可怕，但是有Sakura在，所以不可怕。");
+//        future.channel().writeAndFlush(request3);
+//
+//        Request request4 = new Request();
+//        request4.setId("4");
+//        request4.setName("上杉绘梨衣");
+//        request4.setInfo("Sakura最好了。");
+//        future.channel().writeAndFlush(request4);
 
         future.channel().closeFuture().sync();
 

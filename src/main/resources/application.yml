@@ -1,5 +1,5 @@
 server:
-  port: 8089
+  port: 9999
   servlet:
     context-path: /springboot
 student:
@@ -61,5 +61,3 @@ es:
   host: 10.32.16.179
   port: 9200
   schema: http
-
-
