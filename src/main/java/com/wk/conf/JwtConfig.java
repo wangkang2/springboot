@@ -24,8 +24,13 @@ public class JwtConfig {
                 .setSubject(subject)
                 .setIssuedAt(nowDate)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.ES512, secret)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
+    }
+
+    public String getUserId(String token){
+        Claims claims = getTokenClaims(token);
+        return claims.getSubject();
     }
 
     private Claims getTokenClaims(String token){

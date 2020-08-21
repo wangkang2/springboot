@@ -1,11 +1,14 @@
 package com.wk.controller;
 
+import com.wk.conf.JwtConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -13,10 +16,15 @@ public class ReportController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
 
+    @Autowired
+    private JwtConfig jwtConfig;
+
     @PostMapping("/checkreport/listCheckReport")
-    public String queryExamReportList(@RequestBody Map map){
+    public String queryExamReportList(@RequestBody Map map, HttpServletRequest request){
         logger.info("接收到的数据是{}",map);
         System.out.println(map);
+        String token = request.getHeader("token");
+        System.out.println(jwtConfig.getUserId(token));
 
         return "{\n" +
                 "\t\"code\": \"0\",\n" +
