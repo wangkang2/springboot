@@ -11,13 +11,13 @@ public class HttpPool {
 
     private Integer defaultMaxPerRoute;
 
+    private Integer validateAfterInactivity;
+
     private Integer connectTimeout;
 
     private Integer connectionRequestTimeout;
 
     private Integer socketTimeout;
-
-    private boolean staleConnectionCheckEnabled;
 
     public Integer getMaxTotal() {
         return maxTotal;
@@ -59,11 +59,11 @@ public class HttpPool {
         this.socketTimeout = socketTimeout;
     }
 
-    public boolean isStaleConnectionCheckEnabled() {
-        return staleConnectionCheckEnabled;
+    public Integer getValidateAfterInactivity() {
+        return validateAfterInactivity;
     }
 
-    public void setStaleConnectionCheckEnabled(boolean staleConnectionCheckEnabled) {
-        this.staleConnectionCheckEnabled = staleConnectionCheckEnabled;
+    public void setValidateAfterInactivity(Integer validateAfterInactivity) {
+        this.validateAfterInactivity = validateAfterInactivity;
     }
 }

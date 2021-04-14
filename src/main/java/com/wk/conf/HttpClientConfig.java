@@ -24,6 +24,7 @@ public class HttpClientConfig {
         httpClientConnectionManager.setMaxTotal(httpPool.getMaxTotal());
         //并发数
         httpClientConnectionManager.setDefaultMaxPerRoute(httpPool.getDefaultMaxPerRoute());
+        httpClientConnectionManager.setValidateAfterInactivity(httpPool.getValidateAfterInactivity());
         return httpClientConnectionManager;
     }
 
@@ -47,8 +48,7 @@ public class HttpClientConfig {
         RequestConfig.Builder builder = RequestConfig.custom();
         return builder.setConnectTimeout(httpPool.getConnectTimeout())
                 .setConnectionRequestTimeout(httpPool.getConnectionRequestTimeout())
-                .setSocketTimeout(httpPool.getSocketTimeout())
-                .setStaleConnectionCheckEnabled(httpPool.isStaleConnectionCheckEnabled());
+                .setSocketTimeout(httpPool.getSocketTimeout());
     }
 
     @Bean
