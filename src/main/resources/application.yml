@@ -26,7 +26,24 @@ spring:
       zk-host: 10.32.16.179:9983
       repositories:
         enabled: true
-
+  kafka:
+    bootstrap-servers: 192.168.8.10:9092
+    producer:
+      acks: all # 0-不应答。1-leader 应答。all-所有 leader 和 follower 应答。
+      retries: 3 # 发送失败时，重试发送的次数
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: kafkaConsumer # 默认的消费组ID
+      enable-auto-commit: true # 是否自动提交offset
+      auto-commit-interval: 1000 # 提交offset延时(接收到消息后多久提交offset)
+      # 当kafka中没有初始offset或offset超出范围时将自动重置offset
+      # earliest:重置为分区中最小的offset;
+      # latest:重置为分区中最新的offset(消费分区中新产生的数据);
+      # none:只要有一个分区不存在已提交的offset,就抛出异常;
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 pagehelper:
   helper-dialect: mysql
   reasonable: true
